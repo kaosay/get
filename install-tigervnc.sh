@@ -1,0 +1,33 @@
+#---
+#title: 安装vnc
+#---
+#
+#```
+yum install tigervnc-server -y
+
+#设置vnc密码
+vncpasswd
+
+cp /lib/systemd/system/vncserver@.service /etc/systemd/system/vncserver@\:1.service 
+
+#修改service文件
+sed -i 's/<USER>/root/g' /etc/systemd/system/vncserver@\:1.service
+
+#加载修改的配置
+systemctl daemon-reload
+
+#启动vnc
+systemctl start vncserver@\:1.service
+
+#开机启动
+systemctl enable vncserver@\:1.service 
+
+#查看监听端口
+netstat -lntp| grep vnc
+
+#安装GNOME桌面
+yum groupinstall -y "GNOME Desktop"
+
+
+
+#```
